@@ -1,6 +1,9 @@
 using GolBet.Repositories.Data;
 using GolBet.Repositories.Implementations;
 using GolBet.Repositories.Interfaces;
+using GolBet.Services.Implementations;
+using GolBet.Services.Interfaces;
+using GolBet.Services.Mappings;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -11,6 +14,8 @@ builder.Services.AddDbContext<GolBetDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("GolBetConnection")));
 builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
 builder.Services.AddScoped<IMatchRepository, MatchRepository>();
+builder.Services.AddAutoMapper(configuration => { }, typeof(MappingProfile).Assembly);
+builder.Services.AddScoped<IMatchService, MatchService>();
 
 var app = builder.Build();
 

@@ -1,0 +1,78 @@
+@model IReadOnlyList<GolBet.Services.DTOs.MatchDto>
+@using GolBet.Entities.Enums
+@{
+    ViewData["Title"] = "Cartelera";
+}
+
+<header class="page-heading">
+    <div>
+        <h1>Cartelera de partidos</h1>
+        <p>Horarios de Colombia, marcadores y cuotas en un solo recorrido.</p>
+    </div>
+</header>
+
+<nav class="filter-bar" aria-label="Filtrar partidos por estado">
+    <a class="filter-chip @(ViewBag.CurrentStatus is null ? "active" : "")" asp-action="Index">Todos</a>
+    <a class="filter-chip @(ViewBag.CurrentStatus == MatchStatus.Scheduled ? "active" : "")" asp-action="Index" asp-route-status="Scheduled">Programados</a>
+    <a class="filter-chip @(ViewBag.CurrentStatus == MatchStatus.Live ? "active" : "")" asp-action="Index" asp-route-status="Live">En vivo</a>
+    <a class="filter-chip @(ViewBag.CurrentStatus == MatchStatus.Finished ? "active" : "")" asp-action="Index" asp-route-status="Finished">Finalizados</a>
+</nav>
+
+<div class="match-grid">
+    @foreach (var match in Model)
+    {
+        <article class="match-card">
+            <div class="match-meta">
+                <span class="status-badge status-@match.Status.ToString().ToLowerInvariant()">
+                    <span aria-hidden="true">●</span> @match.StatusName
+                </span>
+                <time datetime="@match.MatchDate.ToString("s")">@match.MatchDate.ToString("ddd d MMM · h:mm tt")</time>
+            </div>
+            <div class="teams-row">
+                <div class="team-block">
+                    @if (!string.IsNullOrWhiteSpace(match.HomeTeamLogoUrl))
+                    {
+                        <img class="team-logo" src="@match.HomeTeamLogoUrl" alt="Escudo de @match.HomeTeamName" />
+                    }
+                    else
+                    {
+                        <span class="team-placeholder" aria-hidden="true">FC</span>
+                    }
+                    <strong>@match.HomeTeamName</strong>
+                    <span>Local</span>
+                </div>
+                <div class="score-block">
+                    @if (match.Status is MatchStatus.Live or MatchStatus.Finished)
+                    {
+                        <span>@(match.HomeScore ?? 0) - @(match.AwayScore ?? 0)</span>
+                    }
+                    else
+                    {
+                        <span>vs.</span>
+                    }
+                </div>
+                <div class="team-block">
+                    @if (!string.IsNullOrWhiteSpace(match.AwayTeamLogoUrl))
+                    {
+                        <img class="team-logo" src="@match.AwayTeamLogoUrl" alt="Escudo de @match.AwayTeamName" />
+                    }
+                    else
+                    {
+                        <span class="team-placeholder" aria-hidden="true">FC</span>
+                    }
+                    <strong>@match.AwayTeamName</strong>
+                    <span>Visitante</span>
+                </div>
+            </div>
+            <div class="odds-row" aria-label="Cuotas del partido">
+                <span><small>1</small><strong>@match.HomeOdds.ToString("0.00")</strong></span>
+                <span><small>X</small><strong>@match.DrawOdds.ToString("0.00")</strong></span>
+                <span><small>2</small><strong>@match.AwayOdds.ToString("0.00")</strong></span>
+            </div>
+            <div class="match-card-footer">
+                <span>@match.Venue · Fecha @match.Matchday</span>
+                <a asp-action="Detail" asp-route-id="@match.Id">Ver detalle <span aria-hidden="true">→</span></a>
+            </div>
+        </article>
+    }
+</div>
