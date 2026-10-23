@@ -1,0 +1,37 @@
+@model IReadOnlyList<GolBet.Services.DTOs.MatchDto>
+@{
+    ViewData["Title"] = "Administrar partidos";
+}
+
+<header class="page-heading">
+    <div><h1>Administrar partidos</h1><p>Crea y actualiza la cartelera sin saltar la capa de servicios.</p></div>
+    <a class="btn btn-primary" asp-action="Create">Nuevo partido</a>
+</header>
+
+@if (TempData["Message"] is string message)
+{
+    <div class="notice" role="status">@message</div>
+}
+
+<div class="table-wrap">
+    <table class="admin-table">
+        <thead><tr><th>Partido</th><th>Fecha</th><th>Estado</th><th class="text-end">Acciones</th></tr></thead>
+        <tbody>
+        @foreach (var match in Model)
+        {
+            <tr>
+                <td><strong>@match.HomeTeamName</strong> vs. <strong>@match.AwayTeamName</strong><small>@match.Venue</small></td>
+                <td>@match.MatchDate.ToString("dd/MM/yyyy h:mm tt")</td>
+                <td>@match.StatusName</td>
+                <td class="admin-actions">
+                    <a class="btn btn-sm btn-outline-primary" asp-action="Edit" asp-route-id="@match.Id">Editar</a>
+                    <form asp-action="Delete" asp-route-id="@match.Id" method="post" onsubmit="return confirm('¿Eliminar este partido?');">
+                        @Html.AntiForgeryToken()
+                        <button class="btn btn-sm btn-outline-danger" type="submit">Eliminar</button>
+                    </form>
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+</div>

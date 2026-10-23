@@ -16,6 +16,7 @@ builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepositor
 builder.Services.AddScoped<IMatchRepository, MatchRepository>();
 builder.Services.AddAutoMapper(configuration => { }, typeof(MappingProfile).Assembly);
 builder.Services.AddScoped<IMatchService, MatchService>();
+builder.Services.AddScoped<IAdminMatchService, AdminMatchService>();
 
 var app = builder.Build();
 

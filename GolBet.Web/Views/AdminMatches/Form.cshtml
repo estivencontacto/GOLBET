@@ -1,0 +1,29 @@
+@model GolBet.Services.DTOs.MatchFormDto
+@{
+    var editing = Model.Id > 0;
+    ViewData["Title"] = editing ? "Editar partido" : "Nuevo partido";
+}
+
+<header class="page-heading"><div><h1>@ViewData["Title"]</h1><p>Los horarios se registran en hora de Colombia.</p></div></header>
+
+<form class="admin-form" asp-action="@(editing ? "Edit" : "Create")" method="post">
+    @Html.AntiForgeryToken()
+    <input asp-for="Id" type="hidden" />
+    <div asp-validation-summary="ModelOnly" class="validation-summary-errors"></div>
+    <div class="form-grid">
+        <div><label asp-for="HomeTeamId"></label><select asp-for="HomeTeamId" asp-items="ViewBag.Teams" class="form-select"><option value="0">Seleccione...</option></select><span asp-validation-for="HomeTeamId"></span></div>
+        <div><label asp-for="AwayTeamId"></label><select asp-for="AwayTeamId" asp-items="ViewBag.Teams" class="form-select"><option value="0">Seleccione...</option></select><span asp-validation-for="AwayTeamId"></span></div>
+        <div><label asp-for="MatchDate"></label><input asp-for="MatchDate" type="datetime-local" class="form-control" /><span asp-validation-for="MatchDate"></span></div>
+        <div><label asp-for="Venue"></label><input asp-for="Venue" class="form-control" /><span asp-validation-for="Venue"></span></div>
+        <div><label asp-for="Matchday"></label><input asp-for="Matchday" class="form-control" /><span asp-validation-for="Matchday"></span></div>
+        <div><label asp-for="Status"></label><select asp-for="Status" asp-items="ViewBag.Statuses" class="form-select"></select></div>
+        <div><label asp-for="HomeScore"></label><input asp-for="HomeScore" class="form-control" /><span asp-validation-for="HomeScore"></span></div>
+        <div><label asp-for="AwayScore"></label><input asp-for="AwayScore" class="form-control" /><span asp-validation-for="AwayScore"></span></div>
+        <div><label asp-for="HomeOdds"></label><input asp-for="HomeOdds" class="form-control" step="0.01" /><span asp-validation-for="HomeOdds"></span></div>
+        <div><label asp-for="DrawOdds"></label><input asp-for="DrawOdds" class="form-control" step="0.01" /><span asp-validation-for="DrawOdds"></span></div>
+        <div><label asp-for="AwayOdds"></label><input asp-for="AwayOdds" class="form-control" step="0.01" /><span asp-validation-for="AwayOdds"></span></div>
+    </div>
+    <div class="form-actions"><a class="btn btn-outline-secondary" asp-action="Index">Cancelar</a><button class="btn btn-primary" type="submit">@(editing ? "Guardar cambios" : "Crear partido")</button></div>
+</form>
+
+@section Scripts { <partial name="_ValidationScriptsPartial" /> }
