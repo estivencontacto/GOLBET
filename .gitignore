@@ -8,3 +8,4 @@ GolBetDB*.mdf
 GolBetDB*.ldf
 tmp/
 .packages/
+output/pdf/
