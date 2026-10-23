@@ -1,0 +1,83 @@
+@model GolBet.Services.DTOs.MatchDto
+@using GolBet.Entities.Enums
+@{
+    ViewData["Title"] = $"{Model.HomeTeamName} vs. {Model.AwayTeamName}";
+}
+
+<nav class="breadcrumb-nav" aria-label="Migas de pan">
+    <a asp-controller="Home" asp-action="Index">Inicio</a>
+    <span aria-hidden="true">/</span>
+    <a asp-action="Index">Partidos</a>
+    <span aria-hidden="true">/</span>
+    <span aria-current="page">Detalle</span>
+</nav>
+
+<article class="detail-panel">
+    <header class="detail-header">
+        <div>
+            <span class="status-badge status-@Model.Status.ToString().ToLowerInvariant()"><span aria-hidden="true">●</span> @Model.StatusName</span>
+            <h1>@Model.HomeTeamName vs. @Model.AwayTeamName</h1>
+            <p>@Model.MatchDate.ToString("dddd d 'de' MMMM · h:mm tt") · @Model.Venue</p>
+        </div>
+        <span class="matchday-badge">Fecha @Model.Matchday</span>
+    </header>
+
+    <section class="detail-score" aria-label="Equipos y marcador">
+        <div class="detail-team">
+            @if (!string.IsNullOrWhiteSpace(Model.HomeTeamLogoUrl))
+            {
+                <img src="@Model.HomeTeamLogoUrl" alt="Escudo de @Model.HomeTeamName" />
+            }
+            else
+            {
+                <span class="detail-placeholder" aria-hidden="true">FC</span>
+            }
+            <h2>@Model.HomeTeamName</h2>
+            <span>Local</span>
+        </div>
+        <div class="detail-result">
+            @if (Model.Status is MatchStatus.Live or MatchStatus.Finished)
+            {
+                <strong>@(Model.HomeScore ?? 0) - @(Model.AwayScore ?? 0)</strong>
+            }
+            else
+            {
+                <strong>vs.</strong>
+            }
+            <span>Hora de Colombia</span>
+        </div>
+        <div class="detail-team">
+            @if (!string.IsNullOrWhiteSpace(Model.AwayTeamLogoUrl))
+            {
+                <img src="@Model.AwayTeamLogoUrl" alt="Escudo de @Model.AwayTeamName" />
+            }
+            else
+            {
+                <span class="detail-placeholder" aria-hidden="true">FC</span>
+            }
+            <h2>@Model.AwayTeamName</h2>
+            <span>Visitante</span>
+        </div>
+    </section>
+
+    <section class="detail-odds" aria-labelledby="odds-title">
+        <h2 id="odds-title">Cuotas del partido</h2>
+        <div>
+            <span><small>Gana @Model.HomeTeamName</small><strong>@Model.HomeOdds.ToString("0.00")</strong></span>
+            <span><small>Empate</small><strong>@Model.DrawOdds.ToString("0.00")</strong></span>
+            <span><small>Gana @Model.AwayTeamName</small><strong>@Model.AwayOdds.ToString("0.00")</strong></span>
+        </div>
+    </section>
+
+    <footer class="detail-footer">
+        <span><strong>@Model.BetCount</strong> apuestas registradas</span>
+        @if (Model.Status == MatchStatus.Scheduled)
+        {
+            <button class="btn btn-primary" type="button" disabled>Apostar (Módulo 8)</button>
+        }
+        else
+        {
+            <button class="btn btn-primary" type="button">Apostar (Módulo 8)</button>
+        }
+    </footer>
+</article>

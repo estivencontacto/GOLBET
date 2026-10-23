@@ -13,4 +13,11 @@ public class MatchesController(IMatchService matchService) : Controller
         var matches = await matchService.GetMatchesAsync(status, cancellationToken);
         return View(matches);
     }
+
+    [HttpGet]
+    public async Task<IActionResult> Detail(int id, CancellationToken cancellationToken)
+    {
+        var match = await matchService.GetByIdAsync(id, cancellationToken);
+        return match is null ? NotFound() : View(match);
+    }
 }
