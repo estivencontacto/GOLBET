@@ -1,0 +1,22 @@
+﻿@{
+    ViewData["Title"] = "Inicio";
+}
+
+<section class="home-hero">
+    <div class="home-copy">
+        <p class="hero-label">Fútbol colombiano, en un solo lugar</p>
+        <h1>Bienvenido a GolBet</h1>
+        <p class="hero-lead">Consulta la cartelera, revisa resultados y encuentra los partidos de tu equipo sin perder el contexto.</p>
+        <div class="hero-actions">
+            <a class="btn btn-primary btn-lg" asp-controller="Matches" asp-action="Index">Ver cartelera</a>
+            <span class="hero-note">Datos de demostración para el curso</span>
+        </div>
+    </div>
+    <div class="scoreboard" aria-label="Vista previa de GolBet">
+        <span class="scoreboard-status">Próximo partido</span>
+        <div class="scoreboard-teams">
+            <span>Local</span><strong>–</strong><span>Visitante</span>
+        </div>
+        <div class="scoreboard-odds"><span>1</span><span>X</span><span>2</span></div>
+    </div>
+</section>
