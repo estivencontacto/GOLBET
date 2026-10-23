@@ -12,9 +12,10 @@ public class MatchService(IMatchRepository matchRepository, IMapper mapper) : IM
 
     public async Task<IReadOnlyList<MatchDto>> GetMatchesAsync(
         MatchStatus? status = null,
+        string? search = null,
         CancellationToken cancellationToken = default)
     {
-        var matches = await matchRepository.GetAllWithTeamsAsync(status, cancellationToken);
+        var matches = await matchRepository.GetAllWithTeamsAsync(status, search, cancellationToken);
         return matches.Select(ToDto).ToList();
     }
 

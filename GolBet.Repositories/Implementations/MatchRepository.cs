@@ -11,6 +11,7 @@ public class MatchRepository(GolBetDbContext context)
 {
     public async Task<IReadOnlyList<Match>> GetAllWithTeamsAsync(
         MatchStatus? status = null,
+        string? search = null,
         CancellationToken cancellationToken = default)
     {
         var query = Context.Matches
@@ -22,6 +23,14 @@ public class MatchRepository(GolBetDbContext context)
         if (status.HasValue)
         {
             query = query.Where(match => match.Status == status.Value);
+        }
+
+        if (!string.IsNullOrWhiteSpace(search))
+        {
+            var normalizedSearch = search.Trim().ToLower();
+            query = query.Where(match =>
+                match.HomeTeam.Name.ToLower().Contains(normalizedSearch) ||
+                match.AwayTeam.Name.ToLower().Contains(normalizedSearch));
         }
 
         return await query

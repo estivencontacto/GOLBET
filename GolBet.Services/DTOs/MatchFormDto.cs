@@ -31,12 +31,12 @@ public class MatchFormDto
     [Display(Name = "Marcador visitante"), Range(0, 99)]
     public int? AwayScore { get; set; }
 
-    [Display(Name = "Cuota local"), Range(typeof(decimal), "1.01", "999.99")]
+    [Display(Name = "Cuota local"), Range(1.01, 999.99)]
     public decimal HomeOdds { get; set; } = 1.80m;
 
-    [Display(Name = "Cuota empate"), Range(typeof(decimal), "1.01", "999.99")]
+    [Display(Name = "Cuota empate"), Range(1.01, 999.99)]
     public decimal DrawOdds { get; set; } = 3.00m;
 
-    [Display(Name = "Cuota visitante"), Range(typeof(decimal), "1.01", "999.99")]
+    [Display(Name = "Cuota visitante"), Range(1.01, 999.99)]
     public decimal AwayOdds { get; set; } = 3.80m;
 }

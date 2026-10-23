@@ -7,6 +7,7 @@ public interface IMatchService
 {
     Task<IReadOnlyList<MatchDto>> GetMatchesAsync(
         MatchStatus? status = null,
+        string? search = null,
         CancellationToken cancellationToken = default);
 
     Task<MatchDto?> GetByIdAsync(int id, CancellationToken cancellationToken = default);

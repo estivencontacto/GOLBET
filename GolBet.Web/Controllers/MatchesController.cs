@@ -7,10 +7,11 @@ namespace GolBet.Web.Controllers;
 public class MatchesController(IMatchService matchService) : Controller
 {
     [HttpGet]
-    public async Task<IActionResult> Index(MatchStatus? status, CancellationToken cancellationToken)
+    public async Task<IActionResult> Index(MatchStatus? status, string? search, CancellationToken cancellationToken)
     {
         ViewBag.CurrentStatus = status;
-        var matches = await matchService.GetMatchesAsync(status, cancellationToken);
+        ViewBag.CurrentSearch = search?.Trim();
+        var matches = await matchService.GetMatchesAsync(status, search, cancellationToken);
         return View(matches);
     }
 

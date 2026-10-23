@@ -1,3 +1,4 @@
+using System.Globalization;
 using GolBet.Repositories.Data;
 using GolBet.Repositories.Implementations;
 using GolBet.Repositories.Interfaces;
@@ -5,6 +6,10 @@ using GolBet.Services.Implementations;
 using GolBet.Services.Interfaces;
 using GolBet.Services.Mappings;
 using Microsoft.EntityFrameworkCore;
+
+var colombianCulture = CultureInfo.GetCultureInfo("es-CO");
+CultureInfo.DefaultThreadCurrentCulture = colombianCulture;
+CultureInfo.DefaultThreadCurrentUICulture = colombianCulture;
 
 var builder = WebApplication.CreateBuilder(args);
 
