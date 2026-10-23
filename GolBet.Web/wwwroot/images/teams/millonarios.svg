@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 112" role="img" aria-labelledby="title">
+  <title id="title">Escudo azul de Millonarios</title>
+  <path fill="#1875c9" d="M8 8h80v58c0 20-16 34-40 42C24 100 8 86 8 66z"/>
+  <path fill="#fff" d="M21 21h54v39c0 14-9 24-27 31-18-7-27-17-27-31z"/>
+  <text x="48" y="62" text-anchor="middle" font-family="Arial,sans-serif" font-size="25" font-weight="700" fill="#1875c9">MIL</text>
+</svg>
